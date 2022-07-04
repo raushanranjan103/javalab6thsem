@@ -9,9 +9,10 @@ public class Main extends Frame implements ActionListener {
 
 	
 ArrayList<Student>slist=new ArrayList<Student>();
-public JTextArea area;
+public JTextArea area=new JTextArea();
 public JLabel name,usn,address,age,g1,g2,g3,g4,g5,g6,g7,g8,cat;
 public JTextField txtname,txtusn,txtaddr,txtage,txtg1,txtg2,txtg3,txtg4,txtg5,txtg6,txtg7,txtg8;
+JScrollPane scroll = new JScrollPane(area, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 public JComboBox<String>category;
 public JButton submit,display;
 public String cats[]= {"GM","BC","SC"};
@@ -73,65 +74,64 @@ public Main()
 	add(submit); 
 	display = new JButton("dISPLAY");
 	add(display);
-	area = new JTextArea();
-	add(area);
+	add(scroll);
 	
 	display.addActionListener((ActionListener)this);
 	submit.addActionListener((ActionListener)this);
 	
 }
 public void actionPerformed(ActionEvent ev) {
-if(ev.getSource()==submit) {
-int age=0;
-try {
-age = Integer.parseInt(txtage.getText());
-if(age<0 || age>100)
-{
-
-txtage.setText(JOptionPane.showInputDialog(null, "reenter age&quot"));
-
-}
-}catch(Exception e) {
-txtage.setText(JOptionPane.showInputDialog(null,"reenter age"));
-// txtage.requestFocus();
-
-}
-}
-Student s = new Student(
-txtname.getText(),
-txtusn.getText(),
-txtaddr.getText(),
-(String)
-
-category.getItemAt(category.getSelectedIndex()),
-Integer.parseInt(txtage.getText()),
-Double.parseDouble(txtg1.getText()),
-Double.parseDouble(txtg2.getText()),
-Double.parseDouble(txtg3.getText()),
-Double.parseDouble(txtg4.getText()),
-Double.parseDouble(txtg5.getText()),
-Double.parseDouble(txtg6.getText()),
-Double.parseDouble(txtg7.getText()),
-Double.parseDouble(txtg8.getText())
-
-);
+	if(ev.getSource()==submit) {
+		int age=0;
+		try {
+		age = Integer.parseInt(txtage.getText());
+		if(age<0 || age>100)
+		{
+		
+		txtage.setText(JOptionPane.showInputDialog(null, "reenter age&quot"));
+		
+		}
+		Student s = new Student(
+		txtname.getText(),
+		txtusn.getText(),
+		txtaddr.getText(),
+		(String)
+		
+		category.getItemAt(category.getSelectedIndex()),
+		Integer.parseInt(txtage.getText()),
+		Double.parseDouble(txtg1.getText()),
+		Double.parseDouble(txtg2.getText()),
+		Double.parseDouble(txtg3.getText()),
+		Double.parseDouble(txtg4.getText()),
+		Double.parseDouble(txtg5.getText()),
+		Double.parseDouble(txtg6.getText()),
+		Double.parseDouble(txtg7.getText()),
+		Double.parseDouble(txtg8.getText())
+		
+		);
 
 
 
-double g = (s.g1+s.g2+s.g3+s.g4+s.g5+s.g6+s.g7+s.g8)/8;
-s.setCGPA(g);
-slist.add(s);
+		double g = (s.g1+s.g2+s.g3+s.g4+s.g5+s.g6+s.g7+s.g8)/8;
+		s.setCGPA(g);
+		slist.add(s);
+		}catch(Exception e) {
+		txtage.setText(JOptionPane.showInputDialog(null,"reenter age"));
+		// txtage.requestFocus();
+		
+		}
+	}
 
-if(ev.getSource()==display) {
-area.setText("");
-for(Student i:slist)
-{
-area.setText(area.getText()+i+"\n");
-System.out.println(i);
-}
-
-}
-}
+	if(ev.getSource()==display) {
+		area.setText(null);
+			for(Student i:slist)
+			{
+			area.setText(area.getText()+i+"\n");
+			System.out.println(i);
+			}
+		
+		}
+	}
 public static void main(String[] args) {
 Main m = new Main();
 m.setLayout(new GridLayout(15,10));
